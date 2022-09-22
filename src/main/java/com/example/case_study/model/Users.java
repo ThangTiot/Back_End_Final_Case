@@ -1,0 +1,36 @@
+package com.example.case_study.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+public class Users {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(nullable = false, unique = true)
+    private String userName;
+    @Column(nullable = false)
+    private String pass;
+    private String fullName;
+    private String gender;
+    private String phone;
+    private String email;
+    private LocalDate dateOfBirth;
+    private String address;
+    private String avatar;
+    private String hobby;
+    private LocalDateTime createDate = LocalDateTime.now();
+    private Boolean blockAccount = true;
+}
