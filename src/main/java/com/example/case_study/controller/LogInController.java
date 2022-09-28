@@ -14,7 +14,7 @@ public class LogInController {
     @Autowired
     IUserService iUserService;
 
-    @GetMapping("/logIn/**")
+    @PostMapping("/logIn")
     public ResponseEntity<Users> logIn(@RequestBody Users users) {
         Users users1 = iUserService.checkSignIn(users);
         if (users1 != null) {
@@ -27,7 +27,8 @@ public class LogInController {
         public ResponseEntity<Users> signUp(@RequestBody Users users) {
         if (iUserService.checkSignUpUserName(users) != null) {
             return null;
+        } else {
+            return new ResponseEntity<>(iUserService.save(users), HttpStatus.OK);
         }
-        return new ResponseEntity<>(iUserService.save(users), HttpStatus.OK);
     }
 }

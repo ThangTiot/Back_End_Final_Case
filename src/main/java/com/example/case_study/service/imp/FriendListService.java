@@ -32,9 +32,12 @@ public class FriendListService implements IFriendListService {
     public List<FriendList> findAllFriend(Long id) {
         List<FriendList> friendListsRaw = iFriendListRepository.findAllFriend(id);
         for (int i = 0; i < friendListsRaw.size(); i++) {
-            switch (friendListsRaw.get(i).getUsersTo()) {
-                case
-            }
+//            switch (friendListsRaw.get(i).getUsersTo()) {
+//                case id:
+//                    return null;
+//                default:
+//                    return null;
+//            }
         }
         return null;
     }
