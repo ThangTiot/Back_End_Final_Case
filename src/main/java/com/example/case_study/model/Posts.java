@@ -22,8 +22,8 @@ public class Posts {
     private String imageName;
     private Long likeCount = 0L;
     private String permissionPost = "Public";
-    private LocalDateTime createPost = LocalDateTime.now();
-    private Boolean deletePost = true;
+    private LocalDateTime createDate = LocalDateTime.now();
+    private Boolean iDelete = true;
     @ManyToOne
     private Users users;
 }

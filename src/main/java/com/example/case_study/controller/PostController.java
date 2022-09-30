@@ -43,7 +43,7 @@ public class PostController {
     public void delete(@PathVariable Long id) {
         Optional<Posts> posts = iPostService.findById(id);
         if (posts.isPresent()) {
-            posts.get().setDeletePost(false);
+            posts.get().setIDelete(false);
             iPostService.save(posts.get());
         }
     }

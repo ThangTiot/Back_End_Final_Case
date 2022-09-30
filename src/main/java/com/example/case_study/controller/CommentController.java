@@ -34,7 +34,7 @@ public class CommentController {
     public void delete(@PathVariable Long id) {
         Optional<Comments> comments = iCommentService.findById(id);
         if (comments.isPresent()) {
-            comments.get().setDeleteComment(false);
+            comments.get().setIDelete(false);
             iCommentService.save(comments.get());
         }
     }

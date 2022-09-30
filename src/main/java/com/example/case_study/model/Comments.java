@@ -21,7 +21,7 @@ public class Comments {
     private Long id;
     private String content;
     private Long likeCount = 0L;
-    private Boolean deleteComment = true;
+    private Boolean iDelete = true;
     private LocalDateTime dateCreate = LocalDateTime.now();
     @ManyToOne
     private Posts posts;
