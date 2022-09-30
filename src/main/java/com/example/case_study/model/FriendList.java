@@ -16,8 +16,7 @@ public class FriendList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String statusRequestTo = "Add Friend";
-    private String statusRequestFrom = "Add Friend";
+    private int type = 0; // 0: Chờ xác nhận; 1: Bạn bè
     @ManyToOne
     private Users usersTo;
     @ManyToOne

@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -19,6 +21,9 @@ public class Notification {
     private Long id;
     private String content;
     private Boolean deleteNotification = true;
+    private LocalDateTime dateCreate = LocalDateTime.now();
+    private int seen = 0; //0: chưa xem; 1: đã xem
+    private int type; // 1: Bình luận; 2:Like; 3:Yêu cầu kết bạn
     @ManyToOne
     private Users usersTo;
     @ManyToOne
