@@ -18,7 +18,7 @@ public class FriendList {
     private Long id;
     private int type = 0; // 0: Chờ xác nhận; 1: Bạn bè
     @ManyToOne
-    private Users usersTo;
+    private User usersTo;
     @ManyToOne
-    private Users usersFrom;
+    private User usersFrom;
 }

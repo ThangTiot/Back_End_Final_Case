@@ -4,10 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -24,7 +22,7 @@ public class Notification {
     private int seen = 0; //0: chưa xem; 1: đã xem
     private int type; // 1: Bình luận; 2:Like; 3:Yêu cầu kết bạn
     @ManyToOne
-    private Users usersTo;
+    private User usersTo;
     @ManyToOne
-    private Users usersFrom;
+    private User usersFrom;
 }

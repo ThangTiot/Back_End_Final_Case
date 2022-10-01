@@ -17,7 +17,7 @@ public class LikePost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    private Users users;
+    private User users;
     @ManyToOne
-    private Posts post;
+    private Post post;
 }

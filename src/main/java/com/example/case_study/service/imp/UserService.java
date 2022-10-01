@@ -1,6 +1,7 @@
 package com.example.case_study.service.imp;
 
-import com.example.case_study.model.Users;
+import com.example.case_study.model.User;
+import com.example.case_study.repository.ICommentRepository;
 import com.example.case_study.repository.IUserRepository;
 import com.example.case_study.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,26 +13,30 @@ import java.util.Optional;
 @Service
 public class UserService implements IUserService {
     @Autowired
-    IUserRepository iUserRepository;
+    IUserRepository repository;
+    @Autowired
+    ICommentRepository commentRepository;
 
     @Override
-    public List<Users> findAll() {
-        return iUserRepository.findAll();
+    public List<User> findAll() {
+        return repository.findAll();
     }
 
     @Override
-    public Users save(Users users) {
-        return iUserRepository.save(users);
+    public User save(User users) {
+        return repository.save(users);
     }
 
     @Override
-    public Optional<Users> findById(Long id) {
-        return iUserRepository.findById(id);
+    public Optional<User> findById(Long id) {
+        return repository.findById(id);
     }
 
     @Override
-    public Users checkSignIn(Users users) {
-        for (Users a : findAll()) {
+    public User checkSignIn(User users) {
+        boolean exists = repository.existsByUserNameAndPass(users.getUserName(),users.getPass());
+        User user = repository.findFirstByUserNameAndPass(users.getUserName(),users.getPass());
+        for (User a : findAll()) {
             if (a.getBlockAccount() && a.getUserName().equals(users.getUserName()) && a.getPass().equals(users.getPass())) {
                 return a;
             }
@@ -40,8 +45,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Users checkSignUpUserName(Users users) {
-        for (Users a : findAll()) {
+    public User checkSignUpUserName(User users) {
+        for (User a : findAll()) {
             if (a.getUserName().equals(users.getUserName())) {
                 return users;
             }
@@ -50,11 +55,29 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public User register(User users) {
+        boolean exists = repository.existsByUserName(users.getUserName());
+        if (exists) {
+            return null;
+        }
+        return repository.save(users);
+    }
+
+    @Override
+    public User create(User users) {
+        boolean existed = repository.existsByUserName(users.getUserName());
+        if (existed) {
+            return null;
+        }
+        return repository.save(users);
+    }
+
+    @Override
     public void delete(Long id) {
-        Optional<Users> users = findById(id);
+        Optional<User> users = findById(id);
         if (users.isPresent()) {
             users.get().setBlockAccount(false);
-            iUserRepository.save(users.get());
+            repository.save(users.get());
         }
     }
 }

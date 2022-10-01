@@ -1,6 +1,6 @@
 package com.example.case_study.controller;
 
-import com.example.case_study.model.Users;
+import com.example.case_study.model.User;
 import com.example.case_study.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,21 +14,13 @@ public class LogInController {
     @Autowired
     IUserService iUserService;
 
-    @PostMapping("/logIn")
-    public ResponseEntity<Users> logIn(@RequestBody Users users) {
-        Users users1 = iUserService.checkSignIn(users);
-        if (users1 != null) {
-            return new ResponseEntity<>(users1, HttpStatus.OK);
-        }
-        return null;
+    @PostMapping("/login")
+    public ResponseEntity<User> logIn(@RequestBody User users) {
+        return ResponseEntity.ok(iUserService.create(users));
     }
 
     @PostMapping("/signUp")
-        public ResponseEntity<Users> signUp(@RequestBody Users users) {
-        if (iUserService.checkSignUpUserName(users) != null) {
-            return null;
-        } else {
-            return new ResponseEntity<>(iUserService.save(users), HttpStatus.OK);
-        }
+    public ResponseEntity<User> signUp(@RequestBody User users) {
+        return ResponseEntity.ok(iUserService.register(users));
     }
 }

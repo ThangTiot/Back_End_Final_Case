@@ -1,20 +1,16 @@
 package com.example.case_study.model;
 
 import lombok.*;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.ColumnDefault;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Posts {
+public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,5 +21,5 @@ public class Posts {
     private LocalDateTime createDate = LocalDateTime.now();
     private Boolean iDelete = true;
     @ManyToOne
-    private Users users;
+    private User users;
 }

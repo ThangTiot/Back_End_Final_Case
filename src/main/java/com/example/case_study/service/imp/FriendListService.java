@@ -1,7 +1,7 @@
 package com.example.case_study.service.imp;
 
 import com.example.case_study.model.FriendList;
-import com.example.case_study.model.Users;
+import com.example.case_study.model.User;
 import com.example.case_study.repository.IFriendListRepository;
 import com.example.case_study.repository.IUserRepository;
 import com.example.case_study.service.IFriendListService;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FriendListService implements IFriendListService {
@@ -39,12 +38,12 @@ public class FriendListService implements IFriendListService {
         return iFriendListRepository.findAllFriend(id);
     }
 
-    public List<Users> findFriendOfUser(Long id){
+    public List<User> findFriendOfUser(Long id){
         List<FriendList> friendListsRaw = findAllFriend(id);
-        List<Users> friendListReal = new ArrayList<>();
+        List<User> friendListReal = new ArrayList<>();
         for (int i = 0; i < friendListsRaw.size(); i++) {
             Long idUserTo = friendListsRaw.get(i).getUsersTo().getId();
-            Users users;
+            User users;
             if (idUserTo == id) {
                 users = friendListsRaw.get(i).getUsersFrom();
             } else {

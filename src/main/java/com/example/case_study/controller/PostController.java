@@ -1,8 +1,6 @@
 package com.example.case_study.controller;
 
-import com.example.case_study.model.LikePost;
-import com.example.case_study.model.Posts;
-import com.example.case_study.model.Users;
+import com.example.case_study.model.Post;
 import com.example.case_study.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,19 +18,19 @@ public class PostController {
     IPostService iPostService;
 
     @GetMapping("/findAll")
-    public ResponseEntity<List<Posts>> findAll() {
+    public ResponseEntity<List<Post>> findAll() {
         return new ResponseEntity<>(iPostService.findAll(), HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Posts> create(@RequestBody Posts posts) {
-        Posts posts1 = iPostService.save(posts);
+    public ResponseEntity<Post> create(@RequestBody Post posts) {
+        Post posts1 = iPostService.save(posts);
         return new ResponseEntity<>(posts1, HttpStatus.CREATED);
     }
 
     @GetMapping("/findById/{id}")
-    public ResponseEntity<Posts> findById(@PathVariable Long id) {
-        Optional<Posts> posts = iPostService.findById(id);
+    public ResponseEntity<Post> findById(@PathVariable Long id) {
+        Optional<Post> posts = iPostService.findById(id);
         if (posts.isPresent()) {
             return new ResponseEntity<>(posts.get(), HttpStatus.OK);
         }
@@ -41,7 +39,7 @@ public class PostController {
 
     @PutMapping("/delete/{id}")
     public void delete(@PathVariable Long id) {
-        Optional<Posts> posts = iPostService.findById(id);
+        Optional<Post> posts = iPostService.findById(id);
         if (posts.isPresent()) {
             posts.get().setIDelete(false);
             iPostService.save(posts.get());
@@ -49,8 +47,8 @@ public class PostController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Posts> update(@RequestBody Posts posts) {
-        Optional<Posts> posts1 = iPostService.findById(posts.getId());
+    public ResponseEntity<Post> update(@RequestBody Post posts) {
+        Optional<Post> posts1 = iPostService.findById(posts.getId());
         if (posts1.isPresent()) {
             posts1.get().setPermissionPost(posts.getPermissionPost());
             posts1.get().setContent(posts.getContent());

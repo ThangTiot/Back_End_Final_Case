@@ -1,13 +1,17 @@
 package com.example.case_study.service;
 
-import com.example.case_study.model.Users;
+import com.example.case_study.model.User;
 
 import java.util.Optional;
 
-public interface IUserService extends ICommon<Users>{
+public interface IUserService extends ICommon<User>{
 
-    Optional<Users> findById(Long id);
-    Users checkSignIn(Users users);
+    Optional<User> findById(Long id);
+    User checkSignIn(User users);
 
-    Users checkSignUpUserName(Users users);
+    User checkSignUpUserName(User users);
+
+    User register(User users);
+
+    User create(User users);
 }

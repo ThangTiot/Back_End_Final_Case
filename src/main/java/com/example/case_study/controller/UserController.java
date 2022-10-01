@@ -1,6 +1,6 @@
 package com.example.case_study.controller;
 
-import com.example.case_study.model.Users;
+import com.example.case_study.model.User;
 import com.example.case_study.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,19 +12,19 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
     @Autowired
     IUserService iUserService;
 
-    @GetMapping("/findAll")
-    public ResponseEntity<List<Users>> findAll() {
+    @GetMapping
+    public ResponseEntity<List<User>> findAll() {
         return new ResponseEntity<>(iUserService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/findById/{id}")
-    public ResponseEntity<Users> findById(@PathVariable Long id) {
-        Optional<Users> users = iUserService.findById(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<User> findById(@PathVariable Long id) {
+        Optional<User> users = iUserService.findById(id);
         if (users.isPresent()) {
             return new ResponseEntity<>(users.get(), HttpStatus.OK);
         }

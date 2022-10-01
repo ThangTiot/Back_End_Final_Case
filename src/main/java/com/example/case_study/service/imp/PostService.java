@@ -1,6 +1,6 @@
 package com.example.case_study.service.imp;
 
-import com.example.case_study.model.Posts;
+import com.example.case_study.model.Post;
 import com.example.case_study.repository.IPostRepository;
 import com.example.case_study.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +15,12 @@ public class PostService implements IPostService {
     IPostRepository iPostRepository;
 
     @Override
-    public List<Posts> findAll() {
+    public List<Post> findAll() {
         return iPostRepository.findAllCustom();
     }
 
     @Override
-    public Posts save(Posts posts) {
+    public Post save(Post posts) {
         return iPostRepository.save(posts);
     }
 
@@ -30,7 +30,7 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public Optional<Posts> findById(Long id) {
+    public Optional<Post> findById(Long id) {
         return iPostRepository.findById(id);
     }
 }

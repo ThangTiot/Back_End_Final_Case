@@ -1,7 +1,7 @@
 package com.example.case_study.controller;
 
 import com.example.case_study.model.LikePost;
-import com.example.case_study.model.Posts;
+import com.example.case_study.model.Post;
 import com.example.case_study.service.ILikePostService;
 import com.example.case_study.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class LikePostController {
     public void likePost(@RequestBody LikePost likePost) {
         LikePost likePost1 = iLikePostService.save(likePost);
         Long idPost = likePost1.getPost().getId();
-        Optional<Posts> posts = iPostService.findById(idPost);
+        Optional<Post> posts = iPostService.findById(idPost);
         if (posts.isPresent()) {
             Long presentLike = posts.get().getLikeCount();
             posts.get().setLikeCount(presentLike + 1);
@@ -44,7 +44,7 @@ public class LikePostController {
         Optional<LikePost> likePost = iLikePostService.findById(id);
         if (likePost.isPresent()) {
             Long idPost = likePost.get().getPost().getId();
-            Optional<Posts> posts = iPostService.findById(idPost);
+            Optional<Post> posts = iPostService.findById(idPost);
             if (posts.isPresent()) {
                 Long presentLike = posts.get().getLikeCount();
                 posts.get().setLikeCount(presentLike - 1);

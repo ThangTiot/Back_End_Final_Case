@@ -17,7 +17,7 @@ public class LikeComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    private Users users;
+    private User users;
     @ManyToOne
-    private Comments comments;
+    private Comment comments;
 }
