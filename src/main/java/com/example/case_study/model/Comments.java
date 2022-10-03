@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -21,8 +22,9 @@ public class Comments {
     private Long id;
     private String content;
     private Long likeCount = 0L;
-    private Boolean iDelete = true;
-    private LocalDateTime dateCreate = LocalDateTime.now();
+    private Boolean iDelete = false;
+    @CreationTimestamp
+    private LocalDateTime dateCreate;
     @ManyToOne
     private Posts posts;
     @ManyToOne

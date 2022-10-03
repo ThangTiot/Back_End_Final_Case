@@ -31,12 +31,10 @@ public class LikePostController {
     public void likePost(@RequestBody LikePost likePost) {
         LikePost likePost1 = iLikePostService.save(likePost);
         Long idPost = likePost1.getPost().getId();
-        Optional<Posts> posts = iPostService.findById(idPost);
-        if (posts.isPresent()) {
-            Long presentLike = posts.get().getLikeCount();
-            posts.get().setLikeCount(presentLike + 1);
-            iPostService.save(posts.get());
-        }
+        Posts posts = iPostService.findById(idPost);
+        Long presentLike = posts.getLikeCount();
+        posts.setLikeCount(presentLike + 1);
+        iPostService.save(posts);
     }
 
     @DeleteMapping("/disLike/{id}")
@@ -44,12 +42,10 @@ public class LikePostController {
         Optional<LikePost> likePost = iLikePostService.findById(id);
         if (likePost.isPresent()) {
             Long idPost = likePost.get().getPost().getId();
-            Optional<Posts> posts = iPostService.findById(idPost);
-            if (posts.isPresent()) {
-                Long presentLike = posts.get().getLikeCount();
-                posts.get().setLikeCount(presentLike - 1);
-                iPostService.save(posts.get());
-            }
+            Posts posts = iPostService.findById(idPost);
+            Long presentLike = posts.getLikeCount();
+            posts.setLikeCount(presentLike - 1);
+            iPostService.save(posts);
         }
         iLikePostService.delete(id);
     }

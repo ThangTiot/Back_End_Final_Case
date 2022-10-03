@@ -23,7 +23,7 @@ public class Posts {
     private Long likeCount = 0L;
     private String permissionPost = "Public";
     private LocalDateTime createDate = LocalDateTime.now();
-    private Boolean iDelete = true;
+    private Boolean iDelete = false;
     @ManyToOne
     private Users users;
 }

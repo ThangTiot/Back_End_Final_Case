@@ -1,5 +1,6 @@
 package com.example.case_study.controller;
 
+import com.example.case_study.dto.UserDto;
 import com.example.case_study.model.Users;
 import com.example.case_study.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,20 +16,22 @@ public class LogInController {
     IUserService iUserService;
 
     @PostMapping("/logIn")
-    public ResponseEntity<Users> logIn(@RequestBody Users users) {
-        Users users1 = iUserService.checkSignIn(users);
-        if (users1 != null) {
-            return new ResponseEntity<>(users1, HttpStatus.OK);
+    public ResponseEntity<UserDto> logIn(@RequestBody UserDto userDto) {
+        UserDto userDto1 = iUserService.checkSignIn(userDto);
+        if (userDto1 != null) {
+            return ResponseEntity.ok(userDto1);
         }
         return null;
     }
 
     @PostMapping("/signUp")
-        public ResponseEntity<Users> signUp(@RequestBody Users users) {
-        if (iUserService.checkSignUpUserName(users) != null) {
+    public ResponseEntity<UserDto> signUp(@RequestBody UserDto userDto) {
+        boolean check = iUserService.checkSignUpUserName(userDto);
+        if (check){
+            return ResponseEntity.ok(userDto);
+        } else{
+            iUserService.save(userDto);
             return null;
-        } else {
-            return new ResponseEntity<>(iUserService.save(users), HttpStatus.OK);
         }
     }
 }

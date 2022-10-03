@@ -9,6 +9,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface IFriendListRepository extends JpaRepository<FriendList, Long> {
-    @Query(value = "select * from friend_list where users_to_id = :idUserPresent or users_from_id = :idUserPresent and status_request_to = 'Unfriend' ", nativeQuery = true)
+    @Query(value = "select * from friend_list where (users_to_id = :idUserPresent or users_from_id = :idUserPresent) and type = 1", nativeQuery = true)
     public List<FriendList> findAllFriend(@Param("idUserPresent") Long id);
+    @Query(value = "select * from friend_list where (users_to_id = :idUserPresent or users_from_id = :idUserPresent) and type = 0", nativeQuery = true)
+    public List<FriendList> findAllFriendConfirm(@Param("idUserPresent") Long id);
+
 }

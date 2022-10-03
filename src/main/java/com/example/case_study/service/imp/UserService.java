@@ -1,5 +1,6 @@
 package com.example.case_study.service.imp;
 
+import com.example.case_study.dto.UserDto;
 import com.example.case_study.model.Users;
 import com.example.case_study.repository.IUserRepository;
 import com.example.case_study.service.IUserService;
@@ -8,53 +9,44 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements IUserService {
     @Autowired
-    IUserRepository iUserRepository;
+    IUserRepository repository;
 
     @Override
-    public List<Users> findAll() {
-        return iUserRepository.findAll();
+    public List<UserDto> findAll() {
+        return repository.findAllByBlockAccountFalse().stream().map(UserDto::new).collect(Collectors.toList());
     }
 
     @Override
-    public Users save(Users users) {
-        return iUserRepository.save(users);
+    public UserDto save(UserDto userDto) {
+        Users users = new Users(userDto);
+        return new UserDto(repository.save(users));
     }
 
     @Override
-    public Optional<Users> findById(Long id) {
-        return iUserRepository.findById(id);
+    public UserDto findById(Long id) {
+        Users users = repository.findByIdAndBlockAccountFalse(id);
+        return new UserDto(users);
     }
 
     @Override
-    public Users checkSignIn(Users users) {
-        for (Users a : findAll()) {
-            if (a.getBlockAccount() && a.getUserName().equals(users.getUserName()) && a.getPass().equals(users.getPass())) {
-                return a;
-            }
-        }
-        return null;
+    public UserDto checkSignIn(UserDto userDto) {
+        return new UserDto(repository.findByUserNameAndPass(userDto.getUserName(), userDto.getPass()));
     }
 
     @Override
-    public Users checkSignUpUserName(Users users) {
-        for (Users a : findAll()) {
-            if (a.getUserName().equals(users.getUserName())) {
-                return users;
-            }
-        }
-        return null;
+    public boolean checkSignUpUserName(UserDto userDto) {
+        return repository.existsUsersByUserName(userDto.getUserName());
     }
 
     @Override
     public void delete(Long id) {
-        Optional<Users> users = findById(id);
-        if (users.isPresent()) {
-            users.get().setBlockAccount(false);
-            iUserRepository.save(users.get());
-        }
+        UserDto userDto = findById(id);
+        userDto.setBlockAccount(true);
+        repository.save(new Users(userDto));
     }
 }
