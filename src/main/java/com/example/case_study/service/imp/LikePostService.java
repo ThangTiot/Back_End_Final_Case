@@ -52,4 +52,9 @@ public class LikePostService implements ILikePostService {
     public Optional<LikePost> findById(Long id) {
         return iLikePostRepository.findById(id);
     }
+
+    @Override
+    public List<LikePost> findAllByUser(Long idUser) {
+        return iLikePostRepository.findAllByUser(idUser);
+    }
 }

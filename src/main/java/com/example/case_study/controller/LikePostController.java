@@ -21,9 +21,13 @@ public class LikePostController {
     @Autowired
     ILikePostService iLikePostService;
 
-    @GetMapping("/findAll")
+    @GetMapping
     public ResponseEntity<List<LikePost>> findAll() {
         return new ResponseEntity<>(iLikePostService.findAll(), HttpStatus.OK);
+    }
+    @GetMapping("/findAllByUser/{idUser}")
+    public ResponseEntity<List<LikePost>> findAllByUser(@PathVariable Long idUser) {
+        return new ResponseEntity<>(iLikePostService.findAllByUser(idUser), HttpStatus.OK);
     }
 
 
