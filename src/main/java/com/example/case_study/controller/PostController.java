@@ -39,7 +39,7 @@ public class PostController {
         return null;
     }
 
-    @PutMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Long id) {
         Optional<Posts> posts = iPostService.findById(id);
         if (posts.isPresent()) {
@@ -59,5 +59,15 @@ public class PostController {
         }
         return null;
     }
+
+    @GetMapping("/post-of-user/{id}")
+    public ResponseEntity<List<Posts>> findAllPostsByUser(@PathVariable Long id){
+        List<Posts> posts = iPostService.findPostListByUser(id);
+        if(posts.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(posts);
+    }
+
 }
 

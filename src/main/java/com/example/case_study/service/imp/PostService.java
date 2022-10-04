@@ -1,6 +1,7 @@
 package com.example.case_study.service.imp;
 
 import com.example.case_study.model.Posts;
+import com.example.case_study.model.Users;
 import com.example.case_study.repository.IPostRepository;
 import com.example.case_study.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,4 +34,10 @@ public class PostService implements IPostService {
     public Optional<Posts> findById(Long id) {
         return iPostRepository.findById(id);
     }
+
+    @Override
+    public List<Posts> findPostListByUser(Long id) {
+        return iPostRepository.findAllByUsersAndIDeleteFalse(id);
+    }
+
 }
