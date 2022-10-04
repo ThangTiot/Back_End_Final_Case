@@ -1,8 +1,5 @@
 package com.example.case_study.controller;
-
-import com.example.case_study.model.LikePost;
 import com.example.case_study.model.Posts;
-import com.example.case_study.model.Users;
 import com.example.case_study.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,6 +55,14 @@ public class PostController {
             return new ResponseEntity<>(iPostService.save(posts1.get()), HttpStatus.CREATED);
         }
         return null;
+    }
+    @GetMapping("/findPostById/{id}")
+    public ResponseEntity<List<Posts>> findPostById(@PathVariable Long id){
+        List<Posts> posts = iPostService.findPostById(id);
+        if (posts.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(posts);
     }
 }
 

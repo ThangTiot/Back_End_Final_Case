@@ -16,7 +16,7 @@ public class PostService implements IPostService {
 
     @Override
     public List<Posts> findAll() {
-        return iPostRepository.findAllCustom();
+        return iPostRepository.findAll();
     }
 
     @Override
@@ -32,5 +32,10 @@ public class PostService implements IPostService {
     @Override
     public Optional<Posts> findById(Long id) {
         return iPostRepository.findById(id);
+    }
+
+    @Override
+    public List<Posts> findPostById(Long id) {
+        return iPostRepository.findPostById(id);
     }
 }
