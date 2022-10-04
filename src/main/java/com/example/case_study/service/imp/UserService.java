@@ -35,7 +35,12 @@ public class UserService implements IUserService {
 
     @Override
     public UserDto checkSignIn(UserDto userDto) {
-        return new UserDto(repository.findByUserNameAndPass(userDto.getUserName(), userDto.getPass()));
+        Users users = repository.findByUserNameAndPass(userDto.getUserName(), userDto.getPass());
+        if (users != null) {
+            return new UserDto(users);
+        } else {
+            return null;
+        }
     }
 
     @Override

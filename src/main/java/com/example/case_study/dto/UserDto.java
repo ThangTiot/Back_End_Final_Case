@@ -20,7 +20,6 @@ public class UserDto {
     private String gender;
     private String phone;
     private String email;
-    @CreationTimestamp
     private LocalDate dateOfBirth;
     private String address;
     private String avatar = "https://firebasestorage.googleapis.com/v0/b/case-study-md6.appspot.com/o/avatar-mac-dinh-1.png?alt=media&token=93a1cbfe-8abc-4548-8a70-e77632767394";

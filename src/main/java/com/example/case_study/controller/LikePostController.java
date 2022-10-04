@@ -27,26 +27,13 @@ public class LikePostController {
     }
 
 
-    @PostMapping("/create")
-    public void likePost(@RequestBody LikePost likePost) {
-        LikePost likePost1 = iLikePostService.save(likePost);
-        Long idPost = likePost1.getPost().getId();
-        Posts posts = iPostService.findById(idPost);
-        Long presentLike = posts.getLikeCount();
-        posts.setLikeCount(presentLike + 1);
-        iPostService.save(posts);
+    @PostMapping("/like")
+    public ResponseEntity<LikePost> likePost(@RequestBody LikePost likePost) {
+        return ResponseEntity.ok(iLikePostService.save(likePost));
     }
 
     @DeleteMapping("/disLike/{id}")
     public void disLikePost(@PathVariable Long id) {
-        Optional<LikePost> likePost = iLikePostService.findById(id);
-        if (likePost.isPresent()) {
-            Long idPost = likePost.get().getPost().getId();
-            Posts posts = iPostService.findById(idPost);
-            Long presentLike = posts.getLikeCount();
-            posts.setLikeCount(presentLike - 1);
-            iPostService.save(posts);
-        }
         iLikePostService.delete(id);
     }
 }

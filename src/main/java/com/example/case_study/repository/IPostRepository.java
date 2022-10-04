@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface IPostRepository extends JpaRepository<Posts, Long> {
-    @Query(value = "select * from Posts where i_delete = true ", nativeQuery = true)
+    @Query(value = "select * from Posts where is_deleted = false ", nativeQuery = true)
     List<Posts> findAllCustom();
 }

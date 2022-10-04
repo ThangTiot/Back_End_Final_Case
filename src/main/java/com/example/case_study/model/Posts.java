@@ -3,6 +3,7 @@ package com.example.case_study.model;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -21,9 +22,11 @@ public class Posts {
     private String content;
     private String imageName;
     private Long likeCount = 0L;
+    private Long commentCount = 0L;
     private String permissionPost = "Public";
-    private LocalDateTime createDate = LocalDateTime.now();
-    private Boolean iDelete = false;
+    @CreationTimestamp
+    private LocalDateTime createDate;
+    private Boolean isDeleted = false;
     @ManyToOne
     private Users users;
 }

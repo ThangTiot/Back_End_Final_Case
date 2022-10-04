@@ -22,7 +22,7 @@ public class Comments {
     private Long id;
     private String content;
     private Long likeCount = 0L;
-    private Boolean iDelete = false;
+    private Boolean isDelete = false;
     @CreationTimestamp
     private LocalDateTime dateCreate;
     @ManyToOne

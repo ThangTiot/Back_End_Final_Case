@@ -1,8 +1,11 @@
 package com.example.case_study.service.imp;
 
 import com.example.case_study.model.Comments;
+import com.example.case_study.model.LikePost;
+import com.example.case_study.model.Posts;
 import com.example.case_study.repository.ICommentRepository;
 import com.example.case_study.service.ICommentService;
+import com.example.case_study.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,8 @@ import java.util.Optional;
 public class CommentService implements ICommentService {
     @Autowired
     ICommentRepository iCommentRepository;
+    @Autowired
+    IPostService iPostService;
 
     @Override
     public List<Comments> findAll() {
@@ -21,11 +26,25 @@ public class CommentService implements ICommentService {
 
     @Override
     public Comments save(Comments comments) {
-        return iCommentRepository.save(comments);
+        Comments comments1 = iCommentRepository.save(comments);
+        Long idPost = comments1.getPosts().getId();
+        Posts posts = iPostService.findById(idPost);
+        Long commentCountPresent = posts.getCommentCount();
+        posts.setCommentCount(commentCountPresent + 1);
+        iPostService.save(posts);
+        return comments1;
     }
 
     @Override
     public void delete(Long id) {
+        Optional<Comments> comments = findById(id);
+        if (comments.isPresent()) {
+            Long idPost = comments.get().getPosts().getId();
+            Posts posts = iPostService.findById(idPost);
+            Long commentCountPresent = posts.getCommentCount();
+            posts.setCommentCount(commentCountPresent - 1);
+            iPostService.save(posts);
+        }
         iCommentRepository.deleteById(id);
     }
 

@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/post")
+@RequestMapping("/posts")
 public class PostController {
     @Autowired
     IPostService iPostService;
@@ -43,7 +43,7 @@ public class PostController {
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Long id) {
         Posts posts = iPostService.findById(id);
-        posts.setIDelete(true);
+        posts.setIsDeleted(true);
         iPostService.save(posts);
     }
 

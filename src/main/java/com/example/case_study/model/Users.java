@@ -26,7 +26,6 @@ public class Users {
     private String userName;
     @Column(nullable = false)
     private String pass;
-    @Column(nullable = false)
     private String fullName;
     private String gender;
     private String phone;
@@ -35,6 +34,7 @@ public class Users {
     private String address;
     private String avatar;
     private String hobby;
+    @CreationTimestamp
     private LocalDateTime createDate;
     private Boolean blockAccount;
 

@@ -46,9 +46,9 @@ public class PostService implements IPostService {
         for (Posts posts : postsRaw) {
             if (posts.getUsers().getId() == id) {
                 postsReal.add(posts);
-            } else if (posts.getPermissionPost() == "public") {
+            } else if (posts.getPermissionPost().equals("public")) {
                 postsReal.add(posts);
-            } else if (friendList.contains(posts.getUsers()) && (posts.getPermissionPost() == "friend")) {
+            } else if (friendList.contains(posts.getUsers()) && (posts.getPermissionPost().equals("friend"))) {
                 postsReal.add(posts);
             }
         }

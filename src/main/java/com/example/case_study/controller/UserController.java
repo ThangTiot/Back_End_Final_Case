@@ -28,7 +28,7 @@ public class UserController {
         return ResponseEntity.ok(iUserService.findById(id));
     }
 
-    @DeleteMapping("/block/{id}")
+    @DeleteMapping("/{id}/block")
     public void blockAccount(@PathVariable Long id) {
         iUserService.delete(id);
     }
