@@ -35,7 +35,14 @@ public class PostController {
         }
         return null;
     }
-
+    @GetMapping("/findPostById/{id}")
+    public ResponseEntity<List<Posts>> findPostById(@PathVariable Long id){
+        List<Posts> posts = iPostService.findPostById(id);
+        if (posts.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(posts);
+    }
     @PutMapping("/delete/{id}")
     public void delete(@PathVariable Long id) {
         Optional<Posts> posts = iPostService.findById(id);
@@ -55,14 +62,6 @@ public class PostController {
             return new ResponseEntity<>(iPostService.save(posts1.get()), HttpStatus.CREATED);
         }
         return null;
-    }
-    @GetMapping("/findPostById/{id}")
-    public ResponseEntity<List<Posts>> findPostById(@PathVariable Long id){
-        List<Posts> posts = iPostService.findPostById(id);
-        if (posts.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(posts);
     }
 }
 
