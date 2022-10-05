@@ -42,9 +42,7 @@ public class PostController {
 
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Long id) {
-        Posts posts = iPostService.findById(id);
-        posts.setIsDeleted(true);
-        iPostService.save(posts);
+        iPostService.delete(id);
     }
 
     @PutMapping("/update/{id}")
@@ -52,9 +50,7 @@ public class PostController {
         Posts posts1 = iPostService.findById(id);
         posts1.setPermissionPost(posts.getPermissionPost());
         posts1.setContent(posts.getContent());
-        if (posts.getImageName() != null) {
-            posts1.setImageName(posts.getImageName());
-        }
+        posts1.setImageName(posts.getImageName());
         return new ResponseEntity<>(iPostService.save(posts1), HttpStatus.CREATED);
     }
 }

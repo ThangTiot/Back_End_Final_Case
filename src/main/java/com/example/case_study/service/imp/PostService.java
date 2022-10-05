@@ -30,7 +30,9 @@ public class PostService implements IPostService {
 
     @Override
     public void delete(Long id) {
-        iPostRepository.deleteById(id);
+        Posts posts = findById(id);
+        posts.setIsDeleted(true);
+        save(posts);
     }
 
     @Override
