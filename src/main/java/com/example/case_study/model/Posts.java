@@ -1,14 +1,13 @@
 package com.example.case_study.model;
 
-import lombok.*;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.ColumnDefault;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -22,10 +21,11 @@ public class Posts {
     private String content;
     private String imageName;
     private Long likeCount = 0L;
+    private Long commentCount = 0L;
     private String permissionPost = "Public";
     @CreationTimestamp
     private LocalDateTime createDate;
-    private Boolean iDelete = false;
+    private Boolean isDeleted = false;
     @ManyToOne
     private Users users;
 }

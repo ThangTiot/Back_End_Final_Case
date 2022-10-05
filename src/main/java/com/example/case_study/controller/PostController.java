@@ -1,4 +1,5 @@
 package com.example.case_study.controller;
+
 import com.example.case_study.model.Posts;
 import com.example.case_study.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,18 +8,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/post")
+@RequestMapping("/posts")
 public class PostController {
     @Autowired
     IPostService iPostService;
 
-    @GetMapping("/findAll")
+    @GetMapping
     public ResponseEntity<List<Posts>> findAll() {
         return new ResponseEntity<>(iPostService.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/listPostOfNewFeed/{id}")
+    public ResponseEntity<List<Posts>> listPostOfNewFeed(@PathVariable Long id) {
+        return new ResponseEntity<>(iPostService.listPostOfNewFeed(id), HttpStatus.OK);
     }
 
     @PostMapping("/create")
@@ -29,11 +34,7 @@ public class PostController {
 
     @GetMapping("/findById/{id}")
     public ResponseEntity<Posts> findById(@PathVariable Long id) {
-        Optional<Posts> posts = iPostService.findById(id);
-        if (posts.isPresent()) {
-            return new ResponseEntity<>(posts.get(), HttpStatus.OK);
-        }
-        return null;
+        return new ResponseEntity<>(iPostService.findById(id), HttpStatus.OK);
     }
     @GetMapping("/findPostById/{id}")
     public ResponseEntity<List<Posts>> findPostById(@PathVariable Long id){
@@ -43,25 +44,23 @@ public class PostController {
         }
         return ResponseEntity.ok(posts);
     }
-    @PutMapping("/delete/{id}")
+
+    @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Long id) {
-        Optional<Posts> posts = iPostService.findById(id);
-        if (posts.isPresent()) {
-            posts.get().setIDelete(false);
-            iPostService.save(posts.get());
-        }
+        Posts posts = iPostService.findById(id);
+        posts.setIsDeleted(true);
+        iPostService.save(posts);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Posts> update(@RequestBody Posts posts) {
-        Optional<Posts> posts1 = iPostService.findById(posts.getId());
-        if (posts1.isPresent()) {
-            posts1.get().setPermissionPost(posts.getPermissionPost());
-            posts1.get().setContent(posts.getContent());
-            posts1.get().setImageName(posts.getImageName());
-            return new ResponseEntity<>(iPostService.save(posts1.get()), HttpStatus.CREATED);
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Posts> update(@PathVariable Long id, @RequestBody Posts posts) {
+        Posts posts1 = iPostService.findById(id);
+        posts1.setPermissionPost(posts.getPermissionPost());
+        posts1.setContent(posts.getContent());
+        if (posts.getImageName() != null) {
+            posts1.setImageName(posts.getImageName());
         }
-        return null;
+        return new ResponseEntity<>(iPostService.save(posts1), HttpStatus.CREATED);
     }
 }
 

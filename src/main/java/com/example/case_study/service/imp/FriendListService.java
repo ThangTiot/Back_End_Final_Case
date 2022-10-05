@@ -35,12 +35,18 @@ public class FriendListService implements IFriendListService {
     }
 
     @Override
-    public List<FriendList> findAllFriend(Long id) {
+    public List<FriendList> findAllFriendList(Long id) {
         return iFriendListRepository.findAllFriend(id);
     }
 
-    public List<Users> findFriendOfUser(Long id){
-        List<FriendList> friendListsRaw = findAllFriend(id);
+    @Override
+    public List<FriendList> findAllFriendListConfirm(Long id) {
+        return iFriendListRepository.findAllFriendConfirm(id);
+    }
+
+    @Override
+    public List<Users> findFriendOfUser(Long id) {
+        List<FriendList> friendListsRaw = findAllFriendList(id);
         List<Users> friendListReal = new ArrayList<>();
         for (int i = 0; i < friendListsRaw.size(); i++) {
             Long idUserTo = friendListsRaw.get(i).getUsersTo().getId();
@@ -54,10 +60,21 @@ public class FriendListService implements IFriendListService {
         }
         return friendListReal;
     }
-// list users without users from friend list!
-//    public List<Users> findUserNoFriend (Long id){
-//
-//
-//
-//    }
+
+    @Override
+    public List<Users> findFriendOfUserConfirm(Long id) {
+        List<FriendList> friendListsRaw = findAllFriendListConfirm(id);
+        List<Users> friendListReal = new ArrayList<>();
+        for (int i = 0; i < friendListsRaw.size(); i++) {
+            Long idUserTo = friendListsRaw.get(i).getUsersTo().getId();
+            Users users;
+            if (idUserTo == id) {
+                users = friendListsRaw.get(i).getUsersFrom();
+            } else {
+                users = friendListsRaw.get(i).getUsersTo();
+            }
+            friendListReal.add(users);
+        }
+        return friendListReal;
+    }
 }

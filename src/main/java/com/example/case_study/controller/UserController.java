@@ -1,5 +1,6 @@
 package com.example.case_study.controller;
 
+import com.example.case_study.dto.UserDto;
 import com.example.case_study.model.Users;
 import com.example.case_study.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,26 +13,22 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
     @Autowired
     IUserService iUserService;
 
-    @GetMapping("/findAll")
-    public ResponseEntity<List<Users>> findAll() {
-        return new ResponseEntity<>(iUserService.findAll(), HttpStatus.OK);
+    @GetMapping
+    public ResponseEntity<List<UserDto>> findAll() {
+        return ResponseEntity.ok(iUserService.findAll());
     }
 
-    @GetMapping("/findById/{id}")
-    public ResponseEntity<Users> findById(@PathVariable Long id) {
-        Optional<Users> users = iUserService.findById(id);
-        if (users.isPresent()) {
-            return new ResponseEntity<>(users.get(), HttpStatus.OK);
-        }
-        return null;
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDto> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(iUserService.findById(id));
     }
 
-    @PutMapping("/block/{id}")
+    @DeleteMapping("/{id}/block")
     public void blockAccount(@PathVariable Long id) {
         iUserService.delete(id);
     }

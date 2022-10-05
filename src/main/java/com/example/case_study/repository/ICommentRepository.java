@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ICommentRepository extends JpaRepository<Comments,Long> {
-    @Query(value = "select * from Comments where delete_comment = true ", nativeQuery = true)
+    @Query(value = "select * from Comments where is_delete = false ", nativeQuery = true)
     List<Comments> findAllCustom();
 }

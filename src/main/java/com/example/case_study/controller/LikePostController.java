@@ -21,36 +21,23 @@ public class LikePostController {
     @Autowired
     ILikePostService iLikePostService;
 
-    @GetMapping("/findAll")
+    @GetMapping
     public ResponseEntity<List<LikePost>> findAll() {
         return new ResponseEntity<>(iLikePostService.findAll(), HttpStatus.OK);
     }
+    @GetMapping("/findAllByUser/{idUser}")
+    public ResponseEntity<List<LikePost>> findAllByUser(@PathVariable Long idUser) {
+        return new ResponseEntity<>(iLikePostService.findAllByUser(idUser), HttpStatus.OK);
+    }
 
 
-    @PostMapping("/create")
-    public void likePost(@RequestBody LikePost likePost) {
-        LikePost likePost1 = iLikePostService.save(likePost);
-        Long idPost = likePost1.getPost().getId();
-        Optional<Posts> posts = iPostService.findById(idPost);
-        if (posts.isPresent()) {
-            Long presentLike = posts.get().getLikeCount();
-            posts.get().setLikeCount(presentLike + 1);
-            iPostService.save(posts.get());
-        }
+    @PostMapping("/like")
+    public ResponseEntity<LikePost> likePost(@RequestBody LikePost likePost) {
+        return ResponseEntity.ok(iLikePostService.save(likePost));
     }
 
     @DeleteMapping("/disLike/{id}")
     public void disLikePost(@PathVariable Long id) {
-        Optional<LikePost> likePost = iLikePostService.findById(id);
-        if (likePost.isPresent()) {
-            Long idPost = likePost.get().getPost().getId();
-            Optional<Posts> posts = iPostService.findById(idPost);
-            if (posts.isPresent()) {
-                Long presentLike = posts.get().getLikeCount();
-                posts.get().setLikeCount(presentLike - 1);
-                iPostService.save(posts.get());
-            }
-        }
         iLikePostService.delete(id);
     }
 }

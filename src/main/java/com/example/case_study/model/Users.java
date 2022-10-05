@@ -1,9 +1,12 @@
 package com.example.case_study.model;
 
+import com.example.case_study.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.beans.BeanUtils;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -29,8 +32,13 @@ public class Users {
     private String email;
     private LocalDate dateOfBirth;
     private String address;
-    private String avatar = "https://firebasestorage.googleapis.com/v0/b/case-study-md4-6d4d1.appspot.com/o/avatar-mac-dinh-1.png?alt=media&token=f17a49a4-3e0f-4d87-b642-5308b3586cb0";
+    private String avatar;
     private String hobby;
-    private LocalDateTime createDate = LocalDateTime.now();
-    private Boolean blockAccount = true;
+    @CreationTimestamp
+    private LocalDateTime createDate;
+    private Boolean blockAccount;
+
+    public Users(UserDto userDto) {
+        BeanUtils.copyProperties(userDto,this);
+    }
 }
