@@ -10,6 +10,6 @@ import java.util.List;
 public interface IPostRepository extends JpaRepository<Posts, Long> {
     @Query(value = "select * from Posts where is_deleted = false ", nativeQuery = true)
     List<Posts> findAllCustom();
-    @Query(value = "select * from posts  where users_id like :id and i_delete = false ", nativeQuery = true)
+    @Query(value = "select * from posts  where users_id like :id and is_deleted = false ", nativeQuery = true)
     List<Posts> findPostById(@Param("id") Long id);
 }
