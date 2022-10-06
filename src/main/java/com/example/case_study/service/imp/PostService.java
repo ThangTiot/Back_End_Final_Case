@@ -36,6 +36,10 @@ public class PostService implements IPostService {
     }
 
     @Override
+    public List<Posts> findPostById(Long id) {
+        return iPostRepository.findPostById(id);
+    }
+    @Override
     public Posts findById(Long id) {
         return iPostRepository.findById(id).orElse(null);
     }

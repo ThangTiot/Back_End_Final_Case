@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IPostService extends ICommon<Posts>{
+    List<Posts> findPostById(Long id);
     Posts findById(Long id);
 
     List<Posts> listPostOfNewFeed(Long id);
