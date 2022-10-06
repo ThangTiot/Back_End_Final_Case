@@ -38,4 +38,10 @@ public class CommentController {
             iCommentService.save(comments.get());
         }
     }
+
+    @GetMapping("/find-by-id/{id}")
+    public ResponseEntity<Comments> findById(@PathVariable Long id) {
+        Optional<Comments> comments = iCommentService.findById(id);
+        return new ResponseEntity<>(comments.get(),HttpStatus.OK);
+    }
 }
