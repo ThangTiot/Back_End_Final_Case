@@ -77,4 +77,17 @@ public class FriendListService implements IFriendListService {
         }
         return friendListReal;
     }
+
+    @Override
+    public List<Users> findAllUserNotFriend(Long id) {
+        List<Users> allUser = iUserRepository.findAll();
+        List<Users> friendOfUser = findFriendOfUser(id);
+        List<Users> friendOfUserConfirm = findFriendOfUserConfirm(id);
+        friendOfUser.addAll(friendOfUserConfirm);
+        for (Users users : friendOfUser) {
+            allUser.remove(users);
+        }
+        allUser.remove(iUserRepository.findByIdAndBlockAccountFalse(id));
+        return allUser;
+    }
 }
