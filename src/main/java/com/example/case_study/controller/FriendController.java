@@ -30,7 +30,7 @@ public class FriendController {
         return new ResponseEntity<>(iFriendListService.findAllUserNotFriend(id),HttpStatus.OK);
     }
 
-    @GetMapping("find-all-mutual-friend/{idUserPresent} + {idUserClick} ")
+    @GetMapping("/find-all-mutual-friend/{idUserPresent}/{idUserClick} ")
     public ResponseEntity<List<Users>> findAllMutualFriend(@PathVariable Long idUserPresent , @PathVariable Long idUserClick){
         return new ResponseEntity<>(iFriendListService.findAllMutualFriend(idUserPresent,idUserClick),HttpStatus.OK);
     }

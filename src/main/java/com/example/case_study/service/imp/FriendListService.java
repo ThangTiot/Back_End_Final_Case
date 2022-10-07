@@ -94,15 +94,13 @@ public class FriendListService implements IFriendListService {
 
     @Override
     public List<Users> findAllMutualFriend(Long id1, Long id2) {
-        List<Users> mutualFriend = null;
+        List<Users> mutualFriend = new ArrayList<>();
         List<Users> friendOfUserPresent = findFriendOfUser(id1);
         List<Users> friendOfUserClick = findFriendOfUser(id2);
-        if (friendOfUserPresent.size() > friendOfUserClick.size()){
+        if (friendOfUserPresent.size() >= friendOfUserClick.size()){
             for (Users users : friendOfUserClick) {
-                for (Users value : friendOfUserPresent) {
-                    if (Objects.equals(value.getId(), users.getId())) {
-                        mutualFriend.add(users);
-                    }
+                if (friendOfUserPresent.contains(users)) {
+                    mutualFriend.add(users);
                 }
             }
         }
