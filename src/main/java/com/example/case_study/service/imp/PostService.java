@@ -20,7 +20,7 @@ public class PostService implements IPostService {
 
     @Override
     public List<Posts> findAll() {
-        return iPostRepository.findAll();
+        return iPostRepository.findAllCustom();
     }
 
     @Override
@@ -30,7 +30,9 @@ public class PostService implements IPostService {
 
     @Override
     public void delete(Long id) {
-        iPostRepository.deleteById(id);
+        Posts posts = findById(id);
+        posts.setIsDeleted(true);
+        save(posts);
     }
 
     @Override
@@ -57,7 +59,8 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public List<Posts> findPostById(Long id) {
-        return iPostRepository.findPostById(id);
+    public List<Posts> findPostListByUser(Long id) {
+        return iPostRepository.findAllByUsersAndIDeleteFalse(id);
     }
+
 }

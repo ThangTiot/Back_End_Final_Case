@@ -38,7 +38,7 @@ public class PostController {
     }
     @GetMapping("/findPostById/{id}")
     public ResponseEntity<List<Posts>> findPostById(@PathVariable Long id){
-        List<Posts> posts = iPostService.findPostById(id);
+        List<Posts> posts = iPostService.findPostListByUser(id);
         if (posts.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -47,9 +47,7 @@ public class PostController {
 
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Long id) {
-        Posts posts = iPostService.findById(id);
-        posts.setIsDeleted(true);
-        iPostService.save(posts);
+        iPostService.delete(id);
     }
 
     @PutMapping("/update/{id}")
@@ -57,10 +55,18 @@ public class PostController {
         Posts posts1 = iPostService.findById(id);
         posts1.setPermissionPost(posts.getPermissionPost());
         posts1.setContent(posts.getContent());
-        if (posts.getImageName() != null) {
-            posts1.setImageName(posts.getImageName());
-        }
+        posts1.setImageName(posts.getImageName());
         return new ResponseEntity<>(iPostService.save(posts1), HttpStatus.CREATED);
     }
+
+    @GetMapping("/post-of-user/{id}")
+    public ResponseEntity<List<Posts>> findAllPostsByUser(@PathVariable Long id){
+        List<Posts> posts = iPostService.findPostListByUser(id);
+        if(posts.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(posts);
+    }
+
 }
 

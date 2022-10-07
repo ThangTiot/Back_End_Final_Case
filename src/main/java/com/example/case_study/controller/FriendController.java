@@ -25,4 +25,13 @@ public class FriendController {
     public ResponseEntity<List<Users>> findAllFriendConfirm(@PathVariable Long id) {
         return new ResponseEntity<>(iFriendListService.findFriendOfUserConfirm(id), HttpStatus.OK);
     }
+    @GetMapping("/findAllUserNotFriend/{id}")
+    public ResponseEntity<List<Users>> findAllUserNotFriend(@PathVariable Long id){
+        return new ResponseEntity<>(iFriendListService.findAllUserNotFriend(id),HttpStatus.OK);
+    }
+
+    @GetMapping("find-all-mutual-friend/{idUserPresent} + {idUserClick} ")
+    public ResponseEntity<List<Users>> findAllMutualFriend(@PathVariable Long idUserPresent , @PathVariable Long idUserClick){
+        return new ResponseEntity<>(iFriendListService.findAllMutualFriend(idUserPresent,idUserClick),HttpStatus.OK);
+    }
 }
