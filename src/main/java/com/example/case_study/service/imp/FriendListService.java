@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -76,5 +77,35 @@ public class FriendListService implements IFriendListService {
             friendListReal.add(users);
         }
         return friendListReal;
+    }
+
+    @Override
+    public List<Users> findAllUserNotFriend(Long id) {
+        List<Users> allUser = iUserRepository.findAll();
+        List<Users> friendOfUser = findFriendOfUser(id);
+        List<Users> friendOfUserConfirm = findFriendOfUserConfirm(id);
+        friendOfUser.addAll(friendOfUserConfirm);
+        for (Users users : friendOfUser) {
+            allUser.remove(users);
+        }
+        allUser.remove(iUserRepository.findByIdAndBlockAccountFalse(id));
+        return allUser;
+    }
+
+    @Override
+    public List<Users> findAllMutualFriend(Long id1, Long id2) {
+        List<Users> mutualFriend = null;
+        List<Users> friendOfUserPresent = findFriendOfUser(id1);
+        List<Users> friendOfUserClick = findFriendOfUser(id2);
+        if (friendOfUserPresent.size() > friendOfUserClick.size()){
+            for (Users users : friendOfUserClick) {
+                for (Users value : friendOfUserPresent) {
+                    if (Objects.equals(value.getId(), users.getId())) {
+                        mutualFriend.add(users);
+                    }
+                }
+            }
+        }
+        return mutualFriend;
     }
 }

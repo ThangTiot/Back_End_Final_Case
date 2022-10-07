@@ -10,4 +10,6 @@ public interface IFriendListService extends ICommon<FriendList>{
     List<FriendList> findAllFriendListConfirm(Long id);
     List<Users> findFriendOfUser(Long id);
     List<Users> findFriendOfUserConfirm(Long id);
+    List<Users> findAllUserNotFriend(Long id);
+    List<Users> findAllMutualFriend(Long id1 , Long id2);
 }
