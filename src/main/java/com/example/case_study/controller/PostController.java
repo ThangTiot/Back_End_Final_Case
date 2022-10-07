@@ -50,14 +50,6 @@ public class PostController {
         iPostService.delete(id);
     }
 
-    @GetMapping("/findPostById/{id}")
-    public ResponseEntity<List<Posts>> findPostById(@PathVariable Long id){
-        List<Posts> posts = iPostService.findPostById(id);
-        if (posts.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok(posts);
-    }
     @PutMapping("/update/{id}")
     public ResponseEntity<Posts> update(@PathVariable Long id, @RequestBody Posts posts) {
         Posts posts1 = iPostService.findById(id);
