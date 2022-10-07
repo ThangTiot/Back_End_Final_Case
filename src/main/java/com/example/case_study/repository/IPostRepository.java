@@ -11,6 +11,6 @@ public interface IPostRepository extends JpaRepository<Posts, Long> {
     @Query(value = "select * from Posts where is_deleted = false ", nativeQuery = true)
     List<Posts> findAllCustom();
 
-    @Query(value = "select * from Posts where users_id like :id and idelete = false",nativeQuery = true)
+    @Query(value = "select * from Posts where users_id like :id and is_deleted = false",nativeQuery = true)
     List<Posts> findAllByUsersAndIDeleteFalse(@Param("id") Long id);
 }
