@@ -10,4 +10,5 @@ public interface IPostService extends ICommon<Posts>{
     Posts findById(Long id);
 
     List<Posts> listPostOfNewFeed(Long id);
+    List<Posts> findPostListByUser(Long id);
 }

@@ -57,4 +57,10 @@ public class PostService implements IPostService {
         postsReal.sort(Comparator.comparing(Posts::getCreateDate));
         return postsReal;
     }
+
+    @Override
+    public List<Posts> findPostListByUser(Long id) {
+        return iPostRepository.findAllByUsersAndIDeleteFalse(id);
+    }
+
 }

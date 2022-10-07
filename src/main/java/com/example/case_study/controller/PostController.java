@@ -53,5 +53,15 @@ public class PostController {
         posts1.setImageName(posts.getImageName());
         return new ResponseEntity<>(iPostService.save(posts1), HttpStatus.CREATED);
     }
+
+    @GetMapping("/post-of-user/{id}")
+    public ResponseEntity<List<Posts>> findAllPostsByUser(@PathVariable Long id){
+        List<Posts> posts = iPostService.findPostListByUser(id);
+        if(posts.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(posts);
+    }
+
 }
 
