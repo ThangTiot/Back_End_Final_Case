@@ -41,11 +41,6 @@ public class FriendListService implements IFriendListService {
     }
 
     @Override
-    public List<FriendList> findAllFriendListConfirm(Long id) {
-        return iFriendListRepository.findAllFriendConfirm(id);
-    }
-
-    @Override
     public List<Users> findFriendOfUser(Long id) {
         List<FriendList> friendListsRaw = findAllFriendList(id);
         List<Users> friendListReal = new ArrayList<>();
@@ -63,28 +58,34 @@ public class FriendListService implements IFriendListService {
     }
 
     @Override
-    public List<Users> findFriendOfUserConfirm(Long id) {
-        List<FriendList> friendListsRaw = findAllFriendListConfirm(id);
-        List<Users> friendListReal = new ArrayList<>();
-        for (int i = 0; i < friendListsRaw.size(); i++) {
-            Long idUserTo = friendListsRaw.get(i).getUsersTo().getId();
-            Users users;
-            if (idUserTo == id) {
-                users = friendListsRaw.get(i).getUsersFrom();
-            } else {
-                users = friendListsRaw.get(i).getUsersTo();
-            }
-            friendListReal.add(users);
+    public List<Users> findFriendOfUserConfirmTo(Long id) {
+        List<FriendList> friendLists = iFriendListRepository.findAllFriendConfirmTo(id);
+        List<Users> usersConfirmTo = new ArrayList<>();
+        for (FriendList f : friendLists) {
+            usersConfirmTo.add(f.getUsersTo());
         }
-        return friendListReal;
+        return usersConfirmTo;
     }
+
+    @Override
+    public List<Users> findFriendOfUserConfirmFrom(Long id) {
+        List<FriendList> friendLists = iFriendListRepository.findAllFriendConfirmFrom(id);
+        List<Users> usersConfirmFrom = new ArrayList<>();
+        for (FriendList f : friendLists) {
+            usersConfirmFrom.add(f.getUsersFrom());
+        }
+        return usersConfirmFrom;
+    }
+
 
     @Override
     public List<Users> findAllUserNotFriend(Long id) {
         List<Users> allUser = iUserRepository.findAll();
         List<Users> friendOfUser = findFriendOfUser(id);
-        List<Users> friendOfUserConfirm = findFriendOfUserConfirm(id);
-        friendOfUser.addAll(friendOfUserConfirm);
+        List<Users> friendOfUserConfirm1 = findFriendOfUserConfirmFrom(id);
+        List<Users> friendOfUserConfirm2 = findFriendOfUserConfirmTo(id);
+        friendOfUser.addAll(friendOfUserConfirm1);
+        friendOfUser.addAll(friendOfUserConfirm2);
         for (Users users : friendOfUser) {
             allUser.remove(users);
         }
@@ -105,5 +106,19 @@ public class FriendListService implements IFriendListService {
             }
         }
         return mutualFriend;
+    }
+
+    @Override
+    public FriendList confirm(Long id1, Long id2) {
+        FriendList relationship = iFriendListRepository.findByUsersFromAndUsersTo(id1, id2);
+        relationship.setType(1);
+        return iFriendListRepository.save(relationship);
+    }
+
+    @Override
+    public FriendList deleteByUserToAndUserFrom(Long id1, Long id2) {
+        FriendList relationship = iFriendListRepository.findByUsersFromAndUsersTo(id1, id2);
+        iFriendListRepository.deleteById(relationship.getId());
+        return relationship;
     }
 }

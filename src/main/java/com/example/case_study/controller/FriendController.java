@@ -21,17 +21,37 @@ public class FriendController {
     public ResponseEntity<List<Users>> findAllFriend(@PathVariable Long id) {
         return new ResponseEntity<>(iFriendListService.findFriendOfUser(id), HttpStatus.OK);
     }
-    @GetMapping("/findAllFriendOfUserConfirm/{id}")
-    public ResponseEntity<List<Users>> findAllFriendConfirm(@PathVariable Long id) {
-        return new ResponseEntity<>(iFriendListService.findFriendOfUserConfirm(id), HttpStatus.OK);
+
+    @GetMapping("/findAllFriendOfUserConfirmTo/{id}")
+    public ResponseEntity<List<Users>> findAllFriendConfirmTo(@PathVariable Long id) {
+        return new ResponseEntity<>(iFriendListService.findFriendOfUserConfirmTo(id), HttpStatus.OK);
     }
+    @GetMapping("/findAllFriendOfUserConfirmFrom/{id}")
+    public ResponseEntity<List<Users>> findAllFriendConfirmFrom(@PathVariable Long id) {
+        return new ResponseEntity<>(iFriendListService.findFriendOfUserConfirmFrom(id), HttpStatus.OK);
+    }
+
     @GetMapping("/findAllUserNotFriend/{id}")
-    public ResponseEntity<List<Users>> findAllUserNotFriend(@PathVariable Long id){
-        return new ResponseEntity<>(iFriendListService.findAllUserNotFriend(id),HttpStatus.OK);
+    public ResponseEntity<List<Users>> findAllUserNotFriend(@PathVariable Long id) {
+        return new ResponseEntity<>(iFriendListService.findAllUserNotFriend(id), HttpStatus.OK);
     }
 
     @GetMapping("/find-all-mutual-friend/{idUserPresent}/{idUserClick} ")
-    public ResponseEntity<List<Users>> findAllMutualFriend(@PathVariable Long idUserPresent , @PathVariable Long idUserClick){
-        return new ResponseEntity<>(iFriendListService.findAllMutualFriend(idUserPresent,idUserClick),HttpStatus.OK);
+    public ResponseEntity<List<Users>> findAllMutualFriend(@PathVariable Long idUserPresent, @PathVariable Long idUserClick) {
+        return new ResponseEntity<>(iFriendListService.findAllMutualFriend(idUserPresent, idUserClick), HttpStatus.OK);
+    }
+
+    @PostMapping("/addFriend")
+    public ResponseEntity<FriendList> addFriend(@RequestBody FriendList friendList) {
+        return ResponseEntity.ok(iFriendListService.save(friendList));
+    }
+
+    @DeleteMapping("/unfriend/{idUserFrom}/{idUserTo}")
+    public ResponseEntity<FriendList> unfriend(@PathVariable Long idUserFrom, @PathVariable Long idUserTo) {
+        return ResponseEntity.ok(iFriendListService.deleteByUserToAndUserFrom(idUserFrom,idUserTo));
+    }
+    @PutMapping("/confirm/{idUserFrom}/{idUserTo}")
+    public ResponseEntity<FriendList> confirm(@PathVariable Long idUserFrom, @PathVariable Long idUserTo) {
+        return ResponseEntity.ok(iFriendListService.confirm(idUserFrom, idUserTo));
     }
 }

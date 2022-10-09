@@ -39,9 +39,6 @@ public class PostController {
     @GetMapping("/findPostById/{id}")
     public ResponseEntity<List<Posts>> findPostById(@PathVariable Long id){
         List<Posts> posts = iPostService.findPostListByUser(id);
-        if (posts.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         return ResponseEntity.ok(posts);
     }
 
