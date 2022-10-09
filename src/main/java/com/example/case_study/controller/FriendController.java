@@ -34,4 +34,16 @@ public class FriendController {
     public ResponseEntity<List<Users>> findAllMutualFriend(@PathVariable Long idUserPresent , @PathVariable Long idUserClick){
         return new ResponseEntity<>(iFriendListService.findAllMutualFriend(idUserPresent,idUserClick),HttpStatus.OK);
     }
+
+    @PostMapping("/addFriend")
+    public ResponseEntity<FriendList> addFriend(@RequestBody FriendList friendList){
+        FriendList newFriend = iFriendListService.save(friendList);
+        return new ResponseEntity<>(newFriend,HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/unfriend/{id}")
+    public ResponseEntity<?> unfriend (@PathVariable("id") Long id){
+        iFriendListService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

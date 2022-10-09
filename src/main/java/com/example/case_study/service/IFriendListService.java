@@ -4,6 +4,7 @@ import com.example.case_study.model.FriendList;
 import com.example.case_study.model.Users;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IFriendListService extends ICommon<FriendList>{
     List<FriendList> findAllFriendList(Long id);
