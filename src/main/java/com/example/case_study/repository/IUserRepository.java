@@ -12,7 +12,6 @@ public interface IUserRepository extends JpaRepository<Users,Long> {
     Users findByUserNameAndPass(@Param("userName") String userName, @Param("pass") String pass);
     boolean existsUsersByUserName(String userName);
     List<Users> findAllByBlockAccountFalse();
-
     Users findByIdAndBlockAccountFalse(Long id);
 
 }

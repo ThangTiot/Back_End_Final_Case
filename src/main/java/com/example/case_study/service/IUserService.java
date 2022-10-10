@@ -7,8 +7,9 @@ import java.util.Optional;
 
 public interface IUserService extends ICommon<UserDto>{
 
+
+    UserDto updateUserInfo(UserDto userDto, Long id);
     UserDto findById(Long id);
     UserDto checkSignIn(UserDto userDto);
-
     boolean checkSignUpUserName(UserDto userDto);
 }
