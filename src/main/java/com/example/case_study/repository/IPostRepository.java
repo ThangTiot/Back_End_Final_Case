@@ -1,9 +1,6 @@
 package com.example.case_study.repository;
 
-import com.example.case_study.model.Comments;
 import com.example.case_study.model.Posts;
-import com.example.case_study.model.Users;
-import org.aspectj.apache.bcel.classfile.Module;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

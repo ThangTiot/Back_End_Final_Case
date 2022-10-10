@@ -26,6 +26,11 @@ public class PostController {
         return new ResponseEntity<>(iPostService.listPostOfNewFeed(id), HttpStatus.OK);
     }
 
+    @GetMapping("/listPostOfTimeLine/{id}")
+    public ResponseEntity<List<Posts>> listPostOfTimeLine(@PathVariable Long id, Long id2){
+        return new ResponseEntity<>(iPostService.listPostOfTimeLine(id,id2), HttpStatus.OK);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<Posts> create(@RequestBody Posts posts) {
         Posts posts1 = iPostService.save(posts);

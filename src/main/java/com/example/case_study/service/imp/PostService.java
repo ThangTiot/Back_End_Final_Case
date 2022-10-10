@@ -4,8 +4,10 @@ import com.example.case_study.dto.UserDto;
 import com.example.case_study.model.Posts;
 import com.example.case_study.model.Users;
 import com.example.case_study.repository.IPostRepository;
+import com.example.case_study.repository.IUserRepository;
 import com.example.case_study.service.IFriendListService;
 import com.example.case_study.service.IPostService;
+import com.example.case_study.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,8 @@ public class PostService implements IPostService {
     IPostRepository iPostRepository;
     @Autowired
     IFriendListService iFriendListService;
+    @Autowired
+    IUserRepository iUserRepository;
 
     @Override
     public List<Posts> findAll() {
@@ -56,6 +60,23 @@ public class PostService implements IPostService {
         }
         postsReal.sort(Comparator.comparing(Posts::getCreateDate));
         return postsReal;
+    }
+
+    @Override
+    public List<Posts> listPostOfTimeLine(Long id, Long idPresent) {
+        List<Posts> postTimeLine = findPostListByUser(id);
+        List<Posts> posts = new ArrayList<>();
+        List<Users> friendList = iFriendListService.findFriendOfUser(id);
+        Users users = iUserRepository.findByIdAndBlockAccountFalse(idPresent);
+        for (Posts p : postTimeLine) {
+            if (p.getPermissionPost().equals("public")) {
+                posts.add(p);
+            } else if (friendList.contains(users) && (p.getPermissionPost().equals("friend"))) {
+                posts.add(p);
+            }
+        }
+        posts.sort(Comparator.comparing(Posts::getCreateDate));
+        return posts;
     }
 
     @Override
