@@ -39,13 +39,14 @@ public class CommentService implements ICommentService {
     public void delete(Long id) {
         Optional<Comments> comments = findById(id);
         if (comments.isPresent()) {
+            comments.get().setIsDelete(true);
             Long idPost = comments.get().getPosts().getId();
             Posts posts = iPostService.findById(idPost);
             Long commentCountPresent = posts.getCommentCount();
             posts.setCommentCount(commentCountPresent - 1);
             iPostService.save(posts);
+            iCommentRepository.save(comments.get());
         }
-        iCommentRepository.deleteById(id);
     }
 
     @Override

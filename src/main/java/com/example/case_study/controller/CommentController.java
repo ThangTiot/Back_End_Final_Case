@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/comment")
+@RequestMapping("/comments")
 public class CommentController {
     @Autowired
     ICommentService iCommentService;
@@ -30,18 +30,14 @@ public class CommentController {
         return new ResponseEntity<>(comments1, HttpStatus.CREATED);
     }
 
-    @PutMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Long id) {
-        Optional<Comments> comments = iCommentService.findById(id);
-        if (comments.isPresent()) {
-            comments.get().setIsDelete(false);
-            iCommentService.save(comments.get());
-        }
+        iCommentService.delete(id);
     }
 
     @GetMapping("/find-by-id/{id}")
     public ResponseEntity<Comments> findById(@PathVariable Long id) {
-        Optional<Comments> comments = iCommentService.findById(id);
-        return new ResponseEntity<>(comments.get(),HttpStatus.OK);
+        Comments comments = iCommentService.findById(id).orElse(null);
+        return new ResponseEntity<>(comments,HttpStatus.OK);
     }
 }
