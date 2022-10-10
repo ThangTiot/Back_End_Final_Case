@@ -54,16 +54,4 @@ public class FriendController {
     public ResponseEntity<FriendList> confirm(@PathVariable Long idUserFrom, @PathVariable Long idUserTo) {
         return ResponseEntity.ok(iFriendListService.confirm(idUserFrom, idUserTo));
     }
-
-    @PostMapping("/addFriend")
-    public ResponseEntity<FriendList> addFriend(@RequestBody FriendList friendList){
-        FriendList newFriend = iFriendListService.save(friendList);
-        return new ResponseEntity<>(newFriend,HttpStatus.CREATED);
-    }
-
-    @DeleteMapping("/unfriend/{id}")
-    public ResponseEntity<?> unfriend (@PathVariable("id") Long id){
-        iFriendListService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }
