@@ -32,22 +32,22 @@ public class UserService implements IUserService {
     public UserDto updateUserInfo(UserDto userDto, Long id) {
 
         Users users = repository.findById(id).orElse(null);
-        if (userDto.getPass()!=null){
+        if (userDto.getPass() != null) {
             users.setPass(userDto.getPass());
+        } else {
+            users.setFullName(userDto.getFullName());
+            users.setPhone(userDto.getPhone());
+            users.setEmail(userDto.getEmail());
+            users.setDateOfBirth(userDto.getDateOfBirth());
+            users.setGender(userDto.getGender());
+            users.setAddress(userDto.getAddress());
+            users.setHobby(userDto.getHobby());
         }
-        else {
-        users.setFullName(userDto.getFullName());
-        users.setPhone(userDto.getPhone());
-        users.setEmail(userDto.getEmail());
-        users.setDateOfBirth(userDto.getDateOfBirth());
-        users.setGender(userDto.getGender());
-        users.setAddress(userDto.getAddress());
-        users.setHobby(userDto.getHobby());}
         return new UserDto(repository.save(users));
     }
 
 
-        @Override
+    @Override
     public UserDto findById(Long id) {
         Users users = repository.findByIdAndBlockAccountFalse(id);
         return new UserDto(users);
