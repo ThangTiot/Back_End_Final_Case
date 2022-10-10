@@ -7,6 +7,7 @@ import com.example.case_study.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,6 +29,25 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public UserDto updateUserInfo(UserDto userDto, Long id) {
+
+        Users users = repository.findById(id).orElse(null);
+        if (userDto.getPass()!=null){
+            users.setPass(userDto.getPass());
+        }
+        else {
+        users.setFullName(userDto.getFullName());
+        users.setPhone(userDto.getPhone());
+        users.setEmail(userDto.getEmail());
+        users.setDateOfBirth(userDto.getDateOfBirth());
+        users.setGender(userDto.getGender());
+        users.setAddress(userDto.getAddress());
+        users.setHobby(userDto.getHobby());}
+        return new UserDto(repository.save(users));
+    }
+
+
+        @Override
     public UserDto findById(Long id) {
         Users users = repository.findByIdAndBlockAccountFalse(id);
         return new UserDto(users);
@@ -54,4 +74,5 @@ public class UserService implements IUserService {
         userDto.setBlockAccount(true);
         repository.save(new Users(userDto));
     }
+
 }

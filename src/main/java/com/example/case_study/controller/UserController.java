@@ -28,6 +28,10 @@ public class UserController {
         return ResponseEntity.ok(iUserService.findById(id));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDto> updateUser(@PathVariable Long id,@RequestBody UserDto userDto ){
+        return ResponseEntity.ok(iUserService.updateUserInfo(userDto, id));
+    }
     @DeleteMapping("/{id}/block")
     public void blockAccount(@PathVariable Long id) {
         iUserService.delete(id);
