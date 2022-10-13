@@ -26,9 +26,9 @@ public class PostController {
         return new ResponseEntity<>(iPostService.listPostOfNewFeed(id), HttpStatus.OK);
     }
 
-    @GetMapping("/listPostOfTimeLine/{id}")
-    public ResponseEntity<List<Posts>> listPostOfTimeLine(@PathVariable Long id, Long id2){
-        return new ResponseEntity<>(iPostService.listPostOfTimeLine(id,id2), HttpStatus.OK);
+    @GetMapping("/listPostOfTimeLine/{id}/{idPresent}")
+    public ResponseEntity<List<Posts>> listPostOfTimeLine(@PathVariable Long id, @PathVariable Long idPresent){
+        return new ResponseEntity<>(iPostService.listPostOfTimeLine(id,idPresent), HttpStatus.OK);
     }
 
     @PostMapping("/create")

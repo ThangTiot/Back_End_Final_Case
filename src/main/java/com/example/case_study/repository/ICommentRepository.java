@@ -10,4 +10,6 @@ import java.util.List;
 public interface ICommentRepository extends JpaRepository<Comments,Long> {
     @Query(value = "select * from Comments where is_delete = false ", nativeQuery = true)
     List<Comments> findAllCustom();
+
+    List<Comments> findAllByPostsId(Long idPost);
 }
