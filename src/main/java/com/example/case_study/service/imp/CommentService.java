@@ -53,4 +53,9 @@ public class CommentService implements ICommentService {
     public Optional<Comments> findById(Long id) {
         return iCommentRepository.findById(id);
     }
+
+    @Override
+    public List<Comments> findAllByPost(Long idPost) {
+        return iCommentRepository.findAllByPostsId(idPost);
+    }
 }

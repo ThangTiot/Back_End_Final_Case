@@ -23,6 +23,10 @@ public class CommentController {
     public ResponseEntity<List<Comments>> findAll() {
         return new ResponseEntity<>(iCommentService.findAll(), HttpStatus.OK);
     }
+    @GetMapping("/findAllByPost/{idPost}")
+    public ResponseEntity<List<Comments>> findAllByPost(@PathVariable Long idPost) {
+        return new ResponseEntity<>(iCommentService.findAllByPost(idPost), HttpStatus.OK);
+    }
 
     @PostMapping("/create")
     public ResponseEntity<Comments> comment(@RequestBody Comments comments) {
