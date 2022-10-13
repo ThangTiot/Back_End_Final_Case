@@ -98,13 +98,11 @@ public class FriendListService implements IFriendListService {
         List<Users> mutualFriend = new ArrayList<>();
         List<Users> friendOfUserPresent = findFriendOfUser(id1);
         List<Users> friendOfUserClick = findFriendOfUser(id2);
-        if (friendOfUserPresent.size() >= friendOfUserClick.size()){
             for (Users users : friendOfUserClick) {
                 if (friendOfUserPresent.contains(users)) {
                     mutualFriend.add(users);
                 }
             }
-        }
         return mutualFriend;
     }
 
