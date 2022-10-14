@@ -1,7 +1,6 @@
 package com.example.case_study.controller;
 
 import com.example.case_study.model.LikePost;
-import com.example.case_study.model.Posts;
 import com.example.case_study.service.ILikePostService;
 import com.example.case_study.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
