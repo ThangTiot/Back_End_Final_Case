@@ -27,13 +27,14 @@ public class CommentService implements ICommentService {
 
     @Override
     public Comments save(Comments comments) {
-        Comments comments1 = iCommentRepository.save(comments);
-        Long idPost = comments1.getPosts().getId();
-        Posts posts = iPostService.findById(idPost);
-        Long commentCountPresent = posts.getCommentCount();
-        posts.setCommentCount(commentCountPresent + 1);
-        iPostService.save(posts);
-        return comments1;
+        if (comments.getId() == null) {
+            Long idPost = comments.getPosts().getId();
+            Posts posts = iPostService.findById(idPost);
+            Long commentCountPresent = posts.getCommentCount();
+            posts.setCommentCount(commentCountPresent + 1);
+            iPostService.save(posts);
+        }
+        return iCommentRepository.save(comments);
     }
 
     @Override

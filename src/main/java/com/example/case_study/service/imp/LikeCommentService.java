@@ -16,12 +16,10 @@ import java.util.Optional;
 public class LikeCommentService implements ILikeCommentService {
     @Autowired
     ILikeCommentRepository iLikeCommentRepository;
-    @Autowired
-    ILikeCommentService iLikeCommentService;
+
     @Autowired
     ICommentService iCommentService;
-    @Autowired
-    ILikePostRepository iLikePostRepository;
+
     @Override
     public List<LikeComment> findAll() {
         return iLikeCommentRepository.findAll();
