@@ -62,4 +62,9 @@ public class CommentService implements ICommentService {
             return iCommentRepository.save(comments1);
      }
 
+
+    @Override
+    public List<Comments> findAllByPost(Long idPost) {
+        return iCommentRepository.findAllByPostsId(idPost);
+    }
 }
