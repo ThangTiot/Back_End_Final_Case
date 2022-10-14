@@ -1,0 +1,64 @@
+package com.example.case_study.dto;
+
+
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Collection;
+
+public class UserToken {
+    private long id;
+    private String username;
+    private String token;
+    private String type = "Bearer";
+    Collection<? extends GrantedAuthority> roles;
+
+    public UserToken() {
+    }
+
+    public UserToken(Long id, String token, String username, Collection<? extends GrantedAuthority> roles) {
+        this.id = id;
+        this.token = token;
+        this.username = username;
+        this.roles = roles;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Collection<? extends GrantedAuthority> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<? extends GrantedAuthority> roles) {
+        this.roles = roles;
+    }
+}

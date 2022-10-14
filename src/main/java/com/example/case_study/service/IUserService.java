@@ -12,4 +12,5 @@ public interface IUserService extends ICommon<UserDto>{
     UserDto findById(Long id);
     UserDto checkSignIn(UserDto userDto);
     boolean checkSignUpUserName(UserDto userDto);
+    UserDto findByUserName(String username);
 }

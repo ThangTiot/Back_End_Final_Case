@@ -11,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -37,6 +38,8 @@ public class Users {
     @CreationTimestamp
     private LocalDateTime createDate;
     private Boolean blockAccount;
+    @ManyToMany
+    private Set<Role> roles;
 
     public Users(UserDto userDto) {
         BeanUtils.copyProperties(userDto,this);

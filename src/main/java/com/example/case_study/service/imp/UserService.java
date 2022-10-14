@@ -3,8 +3,12 @@ package com.example.case_study.service.imp;
 import com.example.case_study.dto.UserDto;
 import com.example.case_study.model.Users;
 import com.example.case_study.repository.IUserRepository;
+import com.example.case_study.sercurity.userprincal.UserPrinciple;
 import com.example.case_study.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.jws.soap.SOAPBinding;
@@ -13,7 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService implements IUserService {
+public class UserService implements IUserService, UserDetailsService {
     @Autowired
     IUserRepository repository;
 
@@ -69,10 +73,21 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public UserDto findByUserName(String username) {
+        Users users = repository.findByUserName(username);
+        return new UserDto(users);
+    }
+
+    @Override
     public void delete(Long id) {
         UserDto userDto = findById(id);
         userDto.setBlockAccount(true);
         repository.save(new Users(userDto));
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Users users = repository.findByUserName(username);
+        return UserPrinciple.build(users);
+    }
 }

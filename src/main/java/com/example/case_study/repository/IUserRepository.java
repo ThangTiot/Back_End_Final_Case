@@ -14,4 +14,6 @@ public interface IUserRepository extends JpaRepository<Users,Long> {
     List<Users> findAllByBlockAccountFalse();
     Users findByIdAndBlockAccountFalse(Long id);
 
+    Users findByUserName(String username);
+
 }
