@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface ICommentService extends ICommon<Comments>{
     Optional<Comments> findById(Long id);
+   Comments updateComment(Comments comments,Long id);
 }

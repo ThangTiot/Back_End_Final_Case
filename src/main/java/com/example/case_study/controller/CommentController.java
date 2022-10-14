@@ -29,7 +29,10 @@ public class CommentController {
         Comments comments1 = iCommentService.save(comments);
         return new ResponseEntity<>(comments1, HttpStatus.CREATED);
     }
-
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Comments> comment(@PathVariable Long id,@RequestBody Comments comments ){
+        return ResponseEntity.ok(iCommentService.updateComment(comments, id));
+    }
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Long id) {
         iCommentService.delete(id);
@@ -40,4 +43,5 @@ public class CommentController {
         Comments comments = iCommentService.findById(id).orElse(null);
         return new ResponseEntity<>(comments,HttpStatus.OK);
     }
+
 }

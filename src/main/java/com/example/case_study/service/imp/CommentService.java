@@ -3,6 +3,7 @@ package com.example.case_study.service.imp;
 import com.example.case_study.model.Comments;
 import com.example.case_study.model.LikePost;
 import com.example.case_study.model.Posts;
+import com.example.case_study.model.Users;
 import com.example.case_study.repository.ICommentRepository;
 import com.example.case_study.service.ICommentService;
 import com.example.case_study.service.IPostService;
@@ -53,4 +54,12 @@ public class CommentService implements ICommentService {
     public Optional<Comments> findById(Long id) {
         return iCommentRepository.findById(id);
     }
+
+    @Override
+    public Comments updateComment(Comments comments, Long id) {
+        Comments comments1 = findById(id).orElse(null);
+            comments1.setContent(comments.getContent());
+            return iCommentRepository.save(comments1);
+     }
+
 }
