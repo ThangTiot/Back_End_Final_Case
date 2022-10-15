@@ -8,8 +8,12 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ICommentRepository extends JpaRepository<Comments,Long> {
-    @Query(value = "select * from Comments where is_delete = false ", nativeQuery = true)
-    List<Comments> findAllCustom();
+    @Query(value = "select * from Comments where (is_delete = false and id_parent_comment IS NULL)", nativeQuery = true)
+    List<Comments> findAllCommentParent();
+    @Query(value = "select * from Comments where (is_delete = false and id_parent_comment IS NOT NULL)", nativeQuery = true)
+    List<Comments> findAllCommentChild();
 
     List<Comments> findAllByPostsId(Long idPost);
+
+    List<Comments> findAllByIdParentCommentAndIsDeleteFalse(Long idParentCmt);
 }

@@ -22,7 +22,7 @@ public class CommentService implements ICommentService {
 
     @Override
     public List<Comments> findAll() {
-        return iCommentRepository.findAllCustom();
+        return iCommentRepository.findAllCommentParent();
     }
 
     @Override
@@ -45,7 +45,13 @@ public class CommentService implements ICommentService {
             Long idPost = comments.get().getPosts().getId();
             Posts posts = iPostService.findById(idPost);
             Long commentCountPresent = posts.getCommentCount();
-            posts.setCommentCount(commentCountPresent - 1);
+            commentCountPresent -= 1;
+            List<Comments> cmtChild = findAllByIdParent(id);
+            for (Comments cmt : cmtChild) {
+                cmt.setIsDelete(true);
+                commentCountPresent -= 1;
+            }
+            posts.setCommentCount(commentCountPresent);
             iPostService.save(posts);
             iCommentRepository.save(comments.get());
         }
@@ -67,5 +73,15 @@ public class CommentService implements ICommentService {
     @Override
     public List<Comments> findAllByPost(Long idPost) {
         return iCommentRepository.findAllByPostsId(idPost);
+    }
+
+    @Override
+    public List<Comments> findAllCommentChild() {
+        return iCommentRepository.findAllCommentChild();
+    }
+
+    @Override
+    public List<Comments> findAllByIdParent(Long idParentCmt) {
+        return iCommentRepository.findAllByIdParentCommentAndIsDeleteFalse(idParentCmt);
     }
 }

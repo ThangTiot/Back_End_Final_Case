@@ -19,9 +19,13 @@ public class CommentController {
     @Autowired
     ICommentService iCommentService;
 
-    @GetMapping("/findAll")
-    public ResponseEntity<List<Comments>> findAll() {
+    @GetMapping("/findAllCommentParent")
+    public ResponseEntity<List<Comments>> findAllCommentParent() {
         return new ResponseEntity<>(iCommentService.findAll(), HttpStatus.OK);
+    }
+    @GetMapping("/findAllCommentChild")
+    public ResponseEntity<List<Comments>> findAllCommentChild() {
+        return new ResponseEntity<>(iCommentService.findAllCommentChild(), HttpStatus.OK);
     }
     @GetMapping("/findAllByPost/{idPost}")
     public ResponseEntity<List<Comments>> findAllByPost(@PathVariable Long idPost) {

@@ -29,6 +29,5 @@ public class Comments {
     private Posts posts;
     @ManyToOne
     private Users users;
-    @ManyToOne
-    private Comments parentComment;
+    private Long idParentComment;
 }
