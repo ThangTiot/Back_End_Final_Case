@@ -9,6 +9,7 @@ public interface IUserService extends ICommon<UserDto>{
 
 
     UserDto updateUserInfo(UserDto userDto, Long id);
+    UserDto updateAvatar(Long id, String url);
     UserDto findById(Long id);
     UserDto checkSignIn(UserDto userDto);
     boolean checkSignUpUserName(UserDto userDto);

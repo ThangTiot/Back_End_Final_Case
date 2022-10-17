@@ -30,7 +30,6 @@ public class UserService implements IUserService {
 
     @Override
     public UserDto updateUserInfo(UserDto userDto, Long id) {
-
         Users users = repository.findById(id).orElse(null);
         if (userDto.getPass() != null) {
             users.setPass(userDto.getPass());
@@ -43,6 +42,13 @@ public class UserService implements IUserService {
             users.setAddress(userDto.getAddress());
             users.setHobby(userDto.getHobby());
         }
+        return new UserDto(repository.save(users));
+    }
+
+    @Override
+    public UserDto updateAvatar(Long id, String url) {
+        Users users = repository.findById(id).orElse(null);
+        users.setAvatar(url);
         return new UserDto(repository.save(users));
     }
 

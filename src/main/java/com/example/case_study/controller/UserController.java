@@ -32,6 +32,11 @@ public class UserController {
     public ResponseEntity<UserDto> updateUser(@PathVariable Long id,@RequestBody UserDto userDto ){
         return ResponseEntity.ok(iUserService.updateUserInfo(userDto, id));
     }
+
+    @PutMapping("/avatar/{id}")
+    public ResponseEntity<UserDto> updateUser(@PathVariable Long id,@RequestBody String url ){
+        return ResponseEntity.ok(iUserService.updateAvatar(id, url));
+    }
     @DeleteMapping("/{id}/block")
     public void blockAccount(@PathVariable Long id) {
         iUserService.delete(id);
