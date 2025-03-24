@@ -13,5 +13,7 @@ public interface IUserRepository extends JpaRepository<Users,Long> {
     boolean existsUsersByUserName(String userName);
     List<Users> findAllByBlockAccountFalse();
     Users findByIdAndBlockAccountFalse(Long id);
+    Users findByEmail(String email);
+    Users findByUserName(String userName);
 
 }

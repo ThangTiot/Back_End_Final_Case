@@ -1,10 +1,15 @@
 package com.example.case_study.service.imp;
 
 import com.example.case_study.dto.UserDto;
+import com.example.case_study.model.CustomUserDetail;
 import com.example.case_study.model.Users;
 import com.example.case_study.repository.IUserRepository;
 import com.example.case_study.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 
@@ -13,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService implements IUserService {
+public class UserService implements IUserService, UserDetailsService {
     @Autowired
     IUserRepository repository;
 
@@ -64,8 +69,43 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean checkSignUpUserName(UserDto userDto) {
-        return repository.existsUsersByUserName(userDto.getUserName());
+    public String checkSignUpUserName(UserDto userDto) {
+        boolean isExist = repository.existsUsersByUserName(userDto.getUserName());
+        if (isExist) {
+            return "User already exists";
+        }
+        return null;
+    }
+
+    @Override
+    public UserDto findByEmail(String email) {
+        Users users = repository.findByEmail(email);
+        if (users != null) {
+            return new UserDto(users);
+        }
+        return null;
+    }
+
+    @Override
+    public UserDto registUserLoginGoogle(OAuth2User principal) {
+        String email = principal.getAttribute("email");
+        UserDto userDto = new UserDto();
+        userDto.setFullName(principal.getAttribute("name"));
+        userDto.setAvatar(principal.getAttribute("picture"));
+        userDto.setEmail(email);
+        save(userDto);
+        return findByEmail(email);
+    }
+
+    @Override
+    public String checkRequired(UserDto userDto) {
+        if (userDto.getUserName() == null) {
+            return "Username is required";
+        }
+        if (userDto.getPass() == null) {
+            return "Password is required";
+        }
+        return null;
     }
 
     @Override
@@ -75,4 +115,12 @@ public class UserService implements IUserService {
         repository.save(new Users(userDto));
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Users users = repository.findByUserName(username);
+        if (users == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        return new CustomUserDetail(users);
+    }
 }
